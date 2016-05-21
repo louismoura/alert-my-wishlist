@@ -1,12 +1,27 @@
-from flask import Blueprint
+from flask import Blueprint, request, session, url_for, render_template
+from werkzeug.utils import redirect
+import src.models.users.error as UserError
+from src.models.users.user import User
 
 user_blueprint = Blueprint('users', __name__)
 
 
 #Login Page
-@user_blueprint.route('/login')
+@user_blueprint.route('/login', methods=['POST', 'GET'])
 def user_login():
-    pass
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['hashed']
+
+        if User.is_login_valid(email, password):
+            session['email'] = email
+            return redirect(url_for(".user_alert"))
+        else:
+            UserError.UserLoginFailed("You login failed")
+
+    return render_template('/users/login.html')
+
+
 
 
 #Register Page
@@ -18,7 +33,7 @@ def user_register():
 #Alert Page
 @user_blueprint.route('/alert')
 def user_alert():
-    pass
+    return "This is alert page"
 
 
 
