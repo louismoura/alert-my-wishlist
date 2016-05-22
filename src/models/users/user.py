@@ -28,3 +28,25 @@ class User(object):
             raise UserError.IncorrectPasswordError("Password is not correct")
 
         return True
+
+    @staticmethod
+    def register_user(email, password):
+        user_data = Database.find_one('user', {'email':email})
+
+        if user_data is not None:
+            raise UserError.UserAlreadyHasError("User is existing, please try again")
+        if not Utils.email_is_valid(email):
+            raise UserError.InvalidEmailError("Email is invalid, please enter another email")
+
+        User(email, Utils.hash_password(password)).save_to_mongo()
+
+        return True
+
+
+    def save_to_mongo(self):
+        Database.insert('user', self.json())
+
+    def json(self):
+        return {'_id':self._id,
+                'email':self.email,
+                'password':self.password}

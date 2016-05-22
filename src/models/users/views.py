@@ -13,11 +13,12 @@ def user_login():
         email = request.form['email']
         password = request.form['hashed']
 
-        if User.is_login_valid(email, password):
-            session['email'] = email
-            return redirect(url_for(".user_alert"))
-        else:
-            UserError.UserLoginFailed("You login failed")
+        try:
+            if User.is_login_valid(email, password):
+                session['email'] = email
+                return redirect(url_for(".user_alert"))
+        except UserError.UserError as e:
+            return e.message
 
     return render_template('/users/login.html')
 
@@ -25,9 +26,20 @@ def user_login():
 
 
 #Register Page
-@user_blueprint.route('/register')
+@user_blueprint.route('/register', methods=['POST', 'GET'])
 def user_register():
-    pass
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['hashed']
+    try:
+        if User.register_user(email, password):
+            session['email'] = email
+            return redirect(url_for(".user_alert"))
+
+    except UserError.UserError as e:
+        return e.message
+
+    return render_template('/users/register.html')
 
 
 #Alert Page
