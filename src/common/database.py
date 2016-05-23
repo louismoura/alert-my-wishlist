@@ -22,3 +22,7 @@ class Database(object):
     @staticmethod
     def find(collection, query):
         return Database.DATABASE[collection].find(query)
+
+    @staticmethod
+    def update(collection, query, data):
+        return Database.DATABASE[collection].update(query, data, upsert=True)
