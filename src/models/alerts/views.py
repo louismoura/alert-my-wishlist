@@ -5,6 +5,10 @@ from flask import Blueprint
 
 alert_blueprint = Blueprint('alerts', __name__)
 
+#Alert Index page
+@alert_blueprint.route('/')
+def index():
+    return "This is alert page"
 
 #Create alert page
 @alert_blueprint.route('/create', methods=['POST'])
