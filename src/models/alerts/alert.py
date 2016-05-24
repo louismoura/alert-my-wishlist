@@ -53,6 +53,7 @@ class Alert(object):
     def load_item_price(self):
         self.item.load_price()
         self.last_checked = datetime.datetime.utcnow()
+        self.item.save_to_mongo()
         self.save_to_mongo()
         return self.item.price
 
@@ -64,3 +65,7 @@ class Alert(object):
     @classmethod
     def find_by_email(cls, user_email):
         return [cls(**alerts) for alerts in Database.find(AlertConstant.COLLECTION, {'user_email':user_email})]
+
+    @classmethod
+    def find_by_id(cls,id):
+        return cls(**Database.find_one(AlertConstant.COLLECTION, {'_id':id}))

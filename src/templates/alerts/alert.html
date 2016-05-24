@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <h1>Alert Information</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">User Email</h3>
+        </div>
+        <div class="panel-body">
+            {{ alert.user_email }}
+        </div>
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Price Limit</h3>
+        </div>
+        <div class="panel-body">
+            {{ alert.price_limit }}
+        </div>
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Item Name</h3>
+        </div>
+        <div class="panel-body">
+            {{ alert.item.name }}
+        </div>
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Item Name</h3>
+        </div>
+        <div class="panel-body">
+            {{ alert.item.url }}
+        </div>
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Item Price</h3>
+        </div>
+        <div class="panel-body">
+            {{ alert.item.price }}
+        </div>
+    </div>
+</div>
+{% endblock %}
