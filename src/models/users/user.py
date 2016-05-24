@@ -2,6 +2,9 @@ import uuid
 from src.common.utils import Utils
 from src.common.database import Database
 import src.models.users.error as UserError
+from src.models.alerts.alert import Alert
+import src.models.users.constants as UserConstant
+
 
 class User(object):
 
@@ -17,7 +20,7 @@ class User(object):
     @staticmethod
     def is_login_valid(email, password):
 
-        user_data = Database.find_one('user', {'email':email})
+        user_data = Database.find_one(UserConstant.COLLECTION, {'email':email})
 
         if user_data is None:
 
@@ -31,7 +34,7 @@ class User(object):
 
     @staticmethod
     def register_user(email, password):
-        user_data = Database.find_one('user', {'email':email})
+        user_data = Database.find_one(UserConstant.COLLECTION, {'email':email})
 
         if user_data is not None:
             raise UserError.UserAlreadyHasError("User is existing, please try again")
@@ -44,9 +47,16 @@ class User(object):
 
 
     def save_to_mongo(self):
-        Database.insert('user', self.json())
+        Database.insert(UserConstant.COLLECTION, self.json())
 
     def json(self):
         return {'_id':self._id,
                 'email':self.email,
                 'password':self.password}
+
+    @classmethod
+    def find_by_email(cls, email):
+        return cls(**Database.find_one(UserConstant.COLLECTION, {'email':email}))
+
+    def get_alerts(self):
+        return Alert.find_by_email(self.email)

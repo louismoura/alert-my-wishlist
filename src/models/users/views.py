@@ -11,7 +11,7 @@ user_blueprint = Blueprint('users', __name__)
 def user_login():
     if request.method == 'POST':
         email = request.form['email']
-        password = request.form['hashed']
+        password = request.form['password']
 
         try:
             if User.is_login_valid(email, password):
@@ -30,14 +30,14 @@ def user_login():
 def user_register():
     if request.method == 'POST':
         email = request.form['email']
-        password = request.form['hashed']
-    try:
-        if User.register_user(email, password):
-            session['email'] = email
-            return redirect(url_for(".user_alert"))
+        password = request.form['password']
+        try:
+            if User.register_user(email, password):
+                session['email'] = email
+                return redirect(url_for(".user_alert"))
 
-    except UserError.UserError as e:
-        return e.message
+        except UserError.UserError as e:
+            return e.message
 
     return render_template('/users/register.html')
 
@@ -45,14 +45,17 @@ def user_register():
 #Alert Page
 @user_blueprint.route('/alert')
 def user_alert():
-    return "This is alert page"
+    user = User.find_by_email(session['email'])
+    alerts = user.get_alerts()
+    return render_template('/users/alerts.html', alerts=alerts)
 
 
 
 #Logout Page
 @user_blueprint.route('/logout')
 def user_logout():
-    pass
+    session['email'] = None
+    return redirect(url_for('home'))
 
 
 #Check alerts by specified user
