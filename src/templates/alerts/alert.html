@@ -1,41 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="page-header">
-    <h1>Alert Information</h1>
+    <h1>Alert Information for {{ alert.item.name }}</h1>
+    <p>Last checked time <strong>{{ alert.last_checked.strftime('%d-%m-%Y at %H:%M')}}</strong>
+    <p>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">User Email</h3>
-        </div>
         <div class="panel-body">
-            {{ alert.user_email }}
-        </div>
-
-        <div class="panel-heading">
-            <h3 class="panel-title">Price Limit</h3>
-        </div>
-        <div class="panel-body">
-            {{ alert.price_limit }}
-        </div>
-
-        <div class="panel-heading">
-            <h3 class="panel-title">Item Name</h3>
-        </div>
-        <div class="panel-body">
-            {{ alert.item.name }}
-        </div>
-
-        <div class="panel-heading">
-            <h3 class="panel-title">Item Name</h3>
-        </div>
-        <div class="panel-body">
-            {{ alert.item.url }}
-        </div>
-
-        <div class="panel-heading">
-            <h3 class="panel-title">Item Price</h3>
-        </div>
-        <div class="panel-body">
-            {{ alert.item.price }}
+            <a class="btn btn-default" target="_blank" href="{{ alert.item.url }}" role="button">Visit Site</a>
+            {% if alert.active %}
+            <a class="btn btn-danger" href="{{ url_for('alerts.deactive_alert', alert_id=alert._id) }}"
+               role="button">Deactive Alert</a>
+            {% else %}
+            <a class="btn btn-success" href="{{ url_for('alerts.active_alert', alert_id=alert._id) }}"
+               role="button">Active Alert</a>
+            {% endif %}
+            <a class="btn btn-warning" href="{{ url_for('alerts.check_price', alert_id=alert._id) }}" role="button">Check
+                Price</a>
         </div>
     </div>
 </div>
