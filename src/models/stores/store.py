@@ -25,7 +25,7 @@ class Store(object):
         }
 
     def save_to_mongo(self):
-        Database.insert(StoreConstants.COLLECTION, self.json())
+        Database.update(StoreConstants.COLLECTION, {'_id':self._id}, self.json())
 
     @classmethod
     def get_by_id(cls, id):
@@ -47,3 +47,11 @@ class Store(object):
                 return store
             except:
                 return StoreError.StoreNotFoundError("The Url prefix give to us cannot find the results.")
+
+    @classmethod
+    def all(cls):
+        return [cls(**elm) for elm in Database.find(StoreConstants.COLLECTION, {})]
+
+
+    def delete(self):
+        return Database.remove(StoreConstants.COLLECTION, {'_id':self._id})
