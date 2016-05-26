@@ -22,11 +22,10 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('stores.index') }}">Stores</a></li>
-                <li><a href="{{ url_for('alerts.index') }}">Alerts</a></li>
             </ul>
             {% if session['email'] %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('users.user_alert') }}"><span class="glyphicon glyphicon-alert"></span> Alerts</a></li>
+                    <li><a href="{{ url_for('users.user_alert') }}"><span class="glyphicon glyphicon-alert"></span> Your Alerts</a></li>
                     <li><a href="{{ url_for('users.user_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
                 </ul>
             {% else %}
