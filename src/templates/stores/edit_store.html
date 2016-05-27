@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label for="query">Search Query</label>
-            <input type="text" name="query" id="query" placeholder='{"class":"price"}' value='{{ store.query | tojson }}' class="form-control" aria-describedby="queryHelp">
+            <input type="text" name="query" id="query" placeholder='{"class":"price"}' value='{{ store.query }}' class="form-control" aria-describedby="queryHelp">
             <span id="queryHelp" class="help-block">What JSON query would we have to do to find the specific tag with the price? Remember to use double quotation marks!</span>
         </div>
         <button class="btn btn-warning" type="submit">Update Store</button>

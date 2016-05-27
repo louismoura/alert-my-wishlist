@@ -15,13 +15,13 @@
              <span id="urlPrefixHelp" class="help-block">What characters do URLs of all items in this online store start with?</span>
         </div>
         <div class="form-group">
-            <label for="tag_name">Price Limit</label>
-            <input type="text" name="tag_name" id="tag_name" placeholder="span" value="span" class="form-control" aria-describedby="tagNameHelp">
+            <label for="tag_name">Tag Name</label>
+            <input type="text" name="tag_name" id="tag_name" placeholder="span" class="form-control" aria-describedby="tagNameHelp">
             <span id="tagNameHelp" class="help-block">What's the HTML tag of the item that contains the item price? (usually <code>span</code>)</span>
         </div>
         <div class="form-group">
             <label for="query">Search Query</label>
-            <input type="text" name="query" id="query" placeholder='{"class":"price"}' value='{"class":"price"}' class="form-control" aria-describedby="queryHelp">
+            <input type="text" name="query" id="query" placeholder='{"class": "price"}' class="form-control" aria-describedby="queryHelp">
             <span id="queryHelp" class="help-block">What JSON query would we have to do to find the specific tag with the price? Remember to use double quotation marks!</span>
         </div>
         <button class="btn btn-success" type="submit">Create New</button>

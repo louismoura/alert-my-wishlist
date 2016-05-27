@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request,json
 
 from src.models.stores.store import Store
 
@@ -23,7 +23,7 @@ def create_store():
         name = request.form['name']
         url_prefix = request.form['url_prefix']
         tag_name = request.form['tag_name']
-        query = request.form['query']
+        query = json.loads(request.form['query'])
 
         Store(name, url_prefix, tag_name, query).save_to_mongo()
 
